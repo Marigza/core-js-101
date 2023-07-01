@@ -341,8 +341,31 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  //  throw new Error('Not implemented');
+  const bracketObj = {
+    ')': '(',
+    ']': '[',
+    '}': '{',
+    '>': '<',
+  };
+  const bracketOpen = ['(', '[', '{', '<'];
+  const result = [];
+
+  for (let i = 0; i < str.length; i += 1) {
+    const top = result[result.length - 1];
+    if (bracketOpen.includes(str[i])) {
+      result.push(str[i]);
+    } else {
+      if (result.length === 0) return false;
+      if (bracketObj[str[i]] === top) {
+        result.pop();
+      } else {
+        return false;
+      }
+    }
+  }
+  return (result.length === 0);
 }
 
 
@@ -366,8 +389,9 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  //  throw new Error('Not implemented');
+  return num.toString(n);
 }
 
 
@@ -385,6 +409,8 @@ function toNaryString(/* num, n */) {
  */
 function getCommonDirectoryPath(/* pathes */) {
   throw new Error('Not implemented');
+  // const commonArr = [];
+  // const pathesArr = pathes.map(elem => elem.split('/'));
 }
 
 
@@ -406,8 +432,24 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  //  throw new Error('Not implemented');
+  const r00 = (m1[0][0] * m2[0][0] || 0) + (m1[0][1] * m2[1][0] || 0) + (m1[0][2] * m2[2][0] || 0);
+  if (m1.length > 1 && m2[0].length > 1) {
+    const r0 = (m1[0][0] * m2[0][1] || 0) + (m1[0][1] * m2[1][1] || 0) + (m1[0][2] * m2[2][1] || 0);
+    const r1 = (m1[0][0] * m2[0][2] || 0) + (m1[0][1] * m2[1][2] || 0) + (m1[0][2] * m2[2][2] || 0);
+    const r2 = (m1[1][0] * m2[0][0] || 0) + (m1[1][1] * m2[1][0] || 0) + (m1[1][2] * m2[2][0] || 0);
+    const r3 = (m1[1][0] * m2[0][1] || 0) + (m1[1][1] * m2[1][1] || 0) + (m1[1][2] * m2[2][1] || 0);
+    const r4 = (m1[1][0] * m2[0][2] || 0) + (m1[1][1] * m2[1][2] || 0) + (m1[1][2] * m2[2][2] || 0);
+    const r5 = (m1[2][0] * m2[0][0] || 0) + (m1[2][1] * m2[1][0] || 0) + (m1[2][2] * m2[2][0] || 0);
+    const r6 = (m1[2][0] * m2[0][1] || 0) + (m1[2][1] * m2[1][1] || 0) + (m1[2][2] * m2[2][1] || 0);
+    const r7 = (m1[2][0] * m2[0][2] || 0) + (m1[2][1] * m2[1][2] || 0) + (m1[2][2] * m2[2][2] || 0);
+    const row1 = [r00, r0, r1];
+    const row2 = [r2, r3, r4];
+    const row3 = [r5, r6, r7];
+    return [row1, row2, row3];
+  }
+  return [[r00]];
 }
 
 
@@ -441,8 +483,25 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  //  throw new Error('Not implemented');
+  if (position[0][0] === '0' && position[0][1] === '0' && position[0][2] === '0') return '0';
+  if (position[1][0] === '0' && position[1][1] === '0' && position[1][2] === '0') return '0';
+  if (position[2][0] === '0' && position[2][1] === '0' && position[2][2] === '0') return '0';
+  if (position[0][0] === 'X' && position[0][1] === 'X' && position[0][2] === 'X') return 'X';
+  if (position[1][0] === 'X' && position[1][1] === 'X' && position[1][2] === 'X') return 'X';
+  if (position[2][0] === 'X' && position[2][1] === 'X' && position[2][2] === 'X') return 'X';
+  if (position[0][0] === '0' && position[1][0] === '0' && position[2][0] === '0') return '0';
+  if (position[0][1] === '0' && position[1][1] === '0' && position[2][1] === '0') return '0';
+  if (position[0][2] === '0' && position[1][2] === '0' && position[2][2] === '0') return '0';
+  if (position[0][0] === 'X' && position[1][0] === 'X' && position[2][0] === 'X') return 'X';
+  if (position[0][1] === 'X' && position[1][1] === 'X' && position[2][1] === 'X') return 'X';
+  if (position[0][2] === 'X' && position[1][2] === 'X' && position[2][2] === 'X') return 'X';
+  if (position[0][0] === '0' && position[1][1] === '0' && position[2][2] === '0') return '0';
+  if (position[0][0] === 'X' && position[1][1] === 'X' && position[2][2] === 'X') return 'X';
+  if (position[0][2] === '0' && position[1][1] === '0' && position[2][0] === '0') return '0';
+  if (position[0][2] === 'X' && position[1][1] === 'X' && position[2][0] === 'X') return 'X';
+  return undefined;
 }
 
 
